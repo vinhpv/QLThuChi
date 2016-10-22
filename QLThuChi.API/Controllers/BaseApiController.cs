@@ -17,6 +17,15 @@ namespace QLThuChi.API.Controllers
         private ModelFactory _modelFactory;
         private ApplicationUserManager _AppUserManager = null;
         private ApplicationRoleManager _AppRoleManager = null;
+        private ApplicationUser _CurentUser = null;
+
+        protected ApplicationUser CurentUser
+        {
+            get
+            {
+                return _CurentUser ?? AppUserManager.FindById(RequestContext.Principal.Identity.GetUserId());
+            }
+        }
 
         protected ApplicationUserManager AppUserManager
         {
