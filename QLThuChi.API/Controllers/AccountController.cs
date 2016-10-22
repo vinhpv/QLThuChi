@@ -18,6 +18,7 @@ using QLThuChi.API.Providers;
 using QLThuChi.API.Results;
 using QLThuChi.API.Entities;
 using System.Linq;
+using System.Web.Http.Description;
 
 namespace QLThuChi.API.Controllers
 {
@@ -27,6 +28,7 @@ namespace QLThuChi.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [Route("users")]
+        [ResponseType(typeof(UserReturnModel))]
         public IHttpActionResult GetUsers()
         {
             //Only SuperAdmin or Admin can delete users (Later when implement roles)
