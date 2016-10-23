@@ -5,6 +5,28 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QLThuChi.API", "QLThuChi.API\QLThuChi.API.csproj", "{E562120F-A045-40EE-8390-628A61F0950B}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "QLThuChi.APP(1)", "QLThuChi.APP\", "{E9D9F9E8-15C1-4F0E-9E44-94AE6152231C}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_52663"
+		Debug.AspNetCompiler.PhysicalPath = "QLThuChi.APP\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52663\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_52663"
+		Release.AspNetCompiler.PhysicalPath = "QLThuChi.APP\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52663\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "52663"
+		SlnRelativePath = "QLThuChi.APP\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +37,10 @@ Global
 		{E562120F-A045-40EE-8390-628A61F0950B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E562120F-A045-40EE-8390-628A61F0950B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E562120F-A045-40EE-8390-628A61F0950B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9D9F9E8-15C1-4F0E-9E44-94AE6152231C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9D9F9E8-15C1-4F0E-9E44-94AE6152231C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9D9F9E8-15C1-4F0E-9E44-94AE6152231C}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9D9F9E8-15C1-4F0E-9E44-94AE6152231C}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
