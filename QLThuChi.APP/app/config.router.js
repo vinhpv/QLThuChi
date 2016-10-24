@@ -32,7 +32,8 @@ angular.module('app')
                                     return $ocLazyLoad.load({
                                         serie: true,
                                         files: [
-                                            'app/controllers/thuchi/nguoithuchi.js'
+                                            'app/controllers/thuchi/nguoithuchi.js',
+                                            'app/services/nguoithuchi.js'
                                         ]
                                     });
                                 }
