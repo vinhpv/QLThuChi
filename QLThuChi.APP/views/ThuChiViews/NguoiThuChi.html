@@ -1,0 +1,71 @@
+﻿<div ng-controller="nguoithuchiCtrl">
+    <div class="row">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-blue">
+                <span class="widget-caption">Basic Form</span>
+            </div>
+            <div class="widget-body">
+                <div>
+                    <form role="form">
+
+                        <div class="form-group">
+                            <label for="txtTen">Họ và tên</label>
+                            <input type="email" class="form-control" id="txtTen" placeholder="Họ và tên" ng-model="hoTen">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtGhiChu">Ghi chú</label>
+                            <input type="email" class="form-control" id="txtGhiChu" placeholder="Ghi chú" ng-model="ghiChu">
+                        </div>
+
+                        <button type="submit" class="btn btn-blue">Thêm mới</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header with-footer">
+                <div class="header bordered-pink">
+                    Danh sách
+                </div>
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                <i class="fa fa-briefcase"></i> Họ và tên
+                            </th>
+                            <th class="hidden-xs">
+                                <i class="fa fa-user"></i> Ghi chú
+                            </th>
+
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in NguoiThuChis">
+                            <td>
+                                <a href="#">{{item.hoTen}}</a>
+                            </td>
+                            <td class="hidden-xs">
+                                {{item.ghiChu}}
+                            </td>
+
+                            <td>
+                                <a href="#" class="btn btn-default btn-xs purple" ng-click="Edit()"><i class="fa fa-edit"></i> Sửa</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="footer">
+                    <code>< th class="hidden-xs" ></code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
