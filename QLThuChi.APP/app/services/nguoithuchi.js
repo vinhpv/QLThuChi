@@ -1,4 +1,1 @@
 ﻿'use strict';
-app.factory(
-    ['','',]
-    );

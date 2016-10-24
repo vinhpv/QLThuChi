@@ -769,6 +769,19 @@ angular.module('app')
                         templateUrl: 'views/login.html',
                         ncyBreadcrumb: {
                             label: 'Login'
+                        },
+                        resolve: {
+                            deps: [
+                                '$ocLazyLoad',
+                                function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        serie: true,
+                                        files: [
+                                            'app/controllers/thuchi/login.js'
+                                        ]
+                                    });
+                                }
+                            ]
                         }
                     })
                     .state('register', {
