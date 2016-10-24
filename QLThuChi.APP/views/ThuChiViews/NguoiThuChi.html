@@ -10,19 +10,31 @@
 
                         <div class="form-group">
                             <label for="txtTen">Họ và tên</label>
-                            <input type="email" class="form-control" id="txtTen" placeholder="Họ và tên" ng-model="HoTen">
+                            <input type="text" class="form-control" id="txtTen" placeholder="Họ và tên" ng-model="HoTen">
                         </div>
 
                         <div class="form-group">
                             <label for="txtGhiChu">Ghi chú</label>
-                            <input type="email" class="form-control" id="txtGhiChu" placeholder="Ghi chú" ng-model="GhiChu">
+                            <input type="text" class="form-control" id="txtGhiChu" placeholder="Ghi chú" ng-model="GhiChu">
                         </div>
 
-                        <button type="submit" class="btn btn-blue">Thêm mới</button>
+                        <div class="buttons-preview">
+                            <a class="btn btn-default purple" href="javascript:void(0);" ng-click="Insert()"><i class="fa fa-plus"></i> Thêm mới</a>
+                            
+                            <a class="btn btn-success" href="javascript:void(0);" ng-click="Commit()">Cập nhật <i class="fa fa-check right"></i></a>
+
+                            <a class="btn btn-danger" href="javascript:void(0);" ng-click="Delete({{NguoiThuchiId}})" ><i class="fa fa-times"></i> Delete</a>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <alert type="danger" class="radius-bordered alert-shadowed" ng-show="{{message != ''}}">
+            <i class="fa-fw fa fa-times"></i>
+            <strong>{{message}}</strong> 
+        </alert>
     </div>
 
     <div class="row">
@@ -55,7 +67,7 @@
                             </td>
 
                             <td>
-                                <a href="#" class="btn btn-default btn-xs purple" ng-click="Select({{item.id}})"><i class="fa fa-edit"></i> Sửa</a>
+                                <a href="#" class="btn btn-default btn-xs purple" ng-click="Select({{item.NguoiThuchiId}})"><i class="fa fa-edit"></i> Sửa</a>
                             </td>
                         </tr>
                     </tbody>

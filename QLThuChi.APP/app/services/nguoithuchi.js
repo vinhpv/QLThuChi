@@ -15,7 +15,7 @@ app.factory('nguoithuchiService', ['$http', '$q', '$localStorage', 'ngAuthSettin
             });
         };
 
-        factory.Create = function (nguoithuchiData) {
+        factory.Insert = function (nguoithuchiData) {
             var deferred = $q.defer();
             $http.post(ngAuthSettings.apiServiceBaseUri + 'api/Nguoithuchi', nguoithuchiData)
             .success(function (data) {
