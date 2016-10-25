@@ -40,6 +40,28 @@ angular.module('app')
                             ]
                         }
                     })
+                    .state('app.lydo', {
+                        url: 'ThuChi/lydo',
+                        templateUrl: 'views/ThuChiViews/LyDo.html',
+                        ncyBreadcrumb: {
+                            label: 'Lý do thu chi',
+                            description: 'Cập nhật lý do thu chi'
+                        },
+                        resolve: {
+                            deps: [
+                                '$ocLazyLoad',
+                                function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        serie: true,
+                                        files: [
+                                            'app/controllers/thuchi/lydoCtrl.js',
+                                            'app/services/LyDoService.js'
+                                        ]
+                                    });
+                                }
+                            ]
+                        }
+                    })
                     /*----End Thu chi Routes ----*/
                     .state('app', {
                         abstract: true,
