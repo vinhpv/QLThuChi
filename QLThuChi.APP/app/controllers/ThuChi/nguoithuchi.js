@@ -1,17 +1,20 @@
 ﻿'use strict';
 
 app.controller('nguoithuchiCtrl', ['$scope', '$injector', '$location', function ($scope, $injector, $location) {
-    $scope.NguoiThuchiId = 0;
-    $scope.HoTen = "";
-    $scope.GhiChu = "";
-    $scope.message = "";
-    $scope.isInsert = true;
+    var KhoiTao = function () {
+        $scope.NguoiThuchiId = 0;
+        $scope.HoTen = "";
+        $scope.GhiChu = "";
+        $scope.message = "";
+        $scope.isInsert = true;
+    }
     var sv = $injector.get('nguoithuchiService');
     var focus = $injector.get('focus');
     $scope.getAll = function () {
         sv.GetAll().then(
             function (data) {
                 $scope.NguoiThuChis = data.data;
+                KhoiTao();
             },
             function (err, stt) {
                 $scope.message = "Có lỗi xảy ra!";
@@ -27,8 +30,8 @@ app.controller('nguoithuchiCtrl', ['$scope', '$injector', '$location', function 
     }
 
     $scope.Commit = function () {
-        var data = { HoTen: $scope.HoTen, GhiChu: $scope.GhiChu };
         if ($scope.isInsert) {
+            var data = { HoTen: $scope.HoTen, GhiChu: $scope.GhiChu };
             sv.Insert(data).then(
                     function (response) {
                         $scope.getAll();
@@ -38,6 +41,7 @@ app.controller('nguoithuchiCtrl', ['$scope', '$injector', '$location', function 
                     }
                 );
         } else {
+            var data = { NguoiThuchiId: $scope.NguoiThuchiId, HoTen: $scope.HoTen, GhiChu: $scope.GhiChu };
             sv.Update($scope.NguoiThuchiId, data).then(
                     function (response) {
                         $scope.getAll();
@@ -62,17 +66,19 @@ app.controller('nguoithuchiCtrl', ['$scope', '$injector', '$location', function 
         focus('txtTen');
     }
 
-    $scope.Delete = function (id) {
-        sv.Delete(id).then(
-                 function (response) {
-                     $scope.getAll();
-                 },
-                 function (err) {
-                     $scope.message = "Có lỗi xảy ra trong quá trình thực hiện! ";
-                 }
-             );
+    $scope.Delete = function () {
+        if ($scope.NguoiThuchiId > 0)
+            sv.Delete($scope.NguoiThuchiId).then(
+                     function (response) {
+                         $scope.getAll();
+                     },
+                     function (err) {
+                         $scope.message = "Có lỗi xảy ra trong quá trình thực hiện! ";
+                     }
+                 );
     }
-
+    KhoiTao();
     $scope.getAll();
+    
 
 }]);

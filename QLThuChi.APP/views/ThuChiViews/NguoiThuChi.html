@@ -2,7 +2,7 @@
     <div class="row">
         <div class="widget">
             <div class="widget-header bordered-bottom bordered-blue">
-                <span class="widget-caption">Basic Form</span>
+                <span class="widget-caption">Thông tin</span>
             </div>
             <div class="widget-body">
                 <div>
@@ -19,11 +19,11 @@
                         </div>
 
                         <div class="buttons-preview">
-                            <a class="btn btn-default purple" href="javascript:void(0);" ng-click="Insert()"><i class="fa fa-plus"></i> Thêm mới</a>
-                            
-                            <a class="btn btn-success" href="javascript:void(0);" ng-click="Commit()">Cập nhật <i class="fa fa-check right"></i></a>
+                            <a class="btn btn-info" href="javascript:void(0);" ng-click="Insert()"><i class="fa fa-plus"></i> Thêm mới</a>
 
-                            <a class="btn btn-danger" href="javascript:void(0);" ng-click="Delete({{NguoiThuchiId}})" ><i class="fa fa-times"></i> Delete</a>
+                            <a class="btn btn-success" href="javascript:void(0);" ng-click="Commit()" confirm='Are you sure?'>Cập nhật <i class="fa fa-check right"></i></a>
+
+                            <a class="btn btn-danger" href="javascript:void(0);" ng-click="Delete()" confirm='Are you sure?'><i class="fa fa-times"></i> Delete</a>
                         </div>
                     </form>
                 </div>
@@ -33,49 +33,40 @@
     <div class="row">
         <alert type="danger" class="radius-bordered alert-shadowed" ng-show="{{message != ''}}">
             <i class="fa-fw fa fa-times"></i>
-            <strong>{{message}}</strong> 
+            <strong>{{message}}</strong>
         </alert>
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-md-6">
-            <div class="well with-header with-footer">
-                <div class="header bordered-pink">
-                    Danh sách
-                </div>
-                <table class="table table-striped table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>
-                                <i class="fa fa-briefcase"></i> Họ và tên
-                            </th>
-                            <th class="hidden-xs" >
-                                <i class="fa fa-user"></i> Ghi chú
-                            </th>
+        <div class="well with-header with-footer">
+            <div class="header bordered-pink">
+                Danh sách
+            </div>
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <i class="fa fa-user"></i> Họ và tên
+                        </th>
+                        <th>
+                            <i class="fa fa-briefcase"></i> Ghi chú
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in NguoiThuChis" ng-click="Select({{item.NguoiThuchiId}})" ng-class="{success: item.NguoiThuchiId === NguoiThuchiId}" >
+                        <td>
+                            <a href="#">{{item.HoTen}}</a>
+                        </td>
+                        <td>
+                            {{item.GhiChu}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-                            <th>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="item in NguoiThuChis">
-                            <td>
-                                <a href="#">{{item.HoTen}}</a>
-                            </td>
-                            <td class="hidden-xs">
-                                {{item.GhiChu}}
-                            </td>
+            <div class="footer">
 
-                            <td>
-                                <a href="#" class="btn btn-default btn-xs purple" ng-click="Select({{item.NguoiThuchiId}})"><i class="fa fa-edit"></i> Sửa</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="footer">
-                    
-                </div>
             </div>
         </div>
     </div>
