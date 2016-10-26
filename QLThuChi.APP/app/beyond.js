@@ -3,7 +3,8 @@
 angular.module('app')
     .controller('AppCtrl', [
         '$rootScope', '$localStorage', '$state',
-        function($rootScope, $localStorage, $state) {
+        function ($rootScope, $localStorage, $state) {
+            $rootScope.loadingAction = false;
             $rootScope.settings = {
                 skin: '',
                 color: {

@@ -1,11 +1,11 @@
-﻿<div ng-controller="nguoithuchiCtrl" ng-class="{disabledbutton: !loading}">
+﻿<div ng-controller="nguoithuchiCtrl">
     <div class="row">
         <div class="widget">
             <div class="widget-header bordered-bottom bordered-blue">
                 <span class="widget-caption">Thông tin</span>
             </div>
             <div class="widget-body">
-                <div>
+                <div ng-class="{disabledbutton: loadingAction}">
                     <form role="form">
 
                         <div class="form-group">
@@ -35,15 +35,18 @@
             <i class="fa-fw fa fa-times"></i>
             <strong>{{message}}</strong>
         </alert>
-        <i class ="fa fa-spinner fa-spin fa-3x fa-fw"  ng-show="loading" ></i>
-</div>
-
-    <div class="row" ng-show="!loading">
+    </div>
+    <div class="row">
+        <div class="center-block" data-loading>
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw center"></i>
+        </div>
+    </div>
+    <div class="row">
         <div class="well with-header with-footer">
             <div class="header bordered-pink">
                 Danh sách
             </div>
-            <table class="table table-striped table-bordered table-hover">
+            <table class="table table-striped table-bordered table-hover" ng-class="{disabledbutton: loadingAction}">
                 <thead>
                     <tr>
                         <th>
@@ -55,8 +58,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in NguoiThuChis" ng-click="Select({{item.NguoiThuchiId}})" 
-                        ng-class="{success: item.NguoiThuchiId === NguoiThuchiId}" >
+                    <tr ng-repeat="item in NguoiThuChis" ng-click="Select({{item.NguoiThuchiId}})"
+                        ng-class="{success: item.NguoiThuchiId === NguoiThuchiId}">
                         <td>
                             <a href="#">{{item.HoTen}}</a>
                         </td>
