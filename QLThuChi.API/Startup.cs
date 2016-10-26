@@ -29,7 +29,7 @@ namespace QLThuChi.API
             ConfigureOAuthTokenConsumption(app);
 
             //ConfigureWebApi(httpConfig);
-
+            
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
             // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)
