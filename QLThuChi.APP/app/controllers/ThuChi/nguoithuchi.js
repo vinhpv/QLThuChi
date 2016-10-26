@@ -7,10 +7,12 @@ app.controller('nguoithuchiCtrl', ['$scope', '$injector', '$location', function 
         $scope.GhiChu = "";
         $scope.message = "";
         $scope.isInsert = true;
+        $scope.loading = false;
     }
     var sv = $injector.get('nguoithuchiService');
     var focus = $injector.get('focus');
     $scope.getAll = function () {
+        $scope.loading = true;
         sv.GetAll().then(
             function (data) {
                 $scope.NguoiThuChis = data.data;
@@ -19,7 +21,7 @@ app.controller('nguoithuchiCtrl', ['$scope', '$injector', '$location', function 
             function (err, stt) {
                 $scope.message = "Có lỗi xảy ra!";
             }
-            )
+            );
     };
     $scope.Insert = function () {
         $scope.NguoiThuchiId = 0;
@@ -32,6 +34,7 @@ app.controller('nguoithuchiCtrl', ['$scope', '$injector', '$location', function 
     $scope.Commit = function () {
         if ($scope.isInsert) {
             var data = { HoTen: $scope.HoTen, GhiChu: $scope.GhiChu };
+            $scope.loading = true;
             sv.Insert(data).then(
                     function (response) {
                         $scope.getAll();

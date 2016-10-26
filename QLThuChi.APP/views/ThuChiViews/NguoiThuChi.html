@@ -1,4 +1,4 @@
-﻿<div ng-controller="nguoithuchiCtrl">
+﻿<div ng-controller="nguoithuchiCtrl" ng-class="{disabledbutton: !loading}">
     <div class="row">
         <div class="widget">
             <div class="widget-header bordered-bottom bordered-blue">
@@ -35,9 +35,10 @@
             <i class="fa-fw fa fa-times"></i>
             <strong>{{message}}</strong>
         </alert>
-    </div>
+        <i class ="fa fa-spinner fa-spin fa-3x fa-fw"  ng-show="loading" ></i>
+</div>
 
-    <div class="row">
+    <div class="row" ng-show="!loading">
         <div class="well with-header with-footer">
             <div class="header bordered-pink">
                 Danh sách
@@ -54,7 +55,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in NguoiThuChis" ng-click="Select({{item.NguoiThuchiId}})" ng-class="{success: item.NguoiThuchiId === NguoiThuchiId}" >
+                    <tr ng-repeat="item in NguoiThuChis" ng-click="Select({{item.NguoiThuchiId}})" 
+                        ng-class="{success: item.NguoiThuchiId === NguoiThuchiId}" >
                         <td>
                             <a href="#">{{item.HoTen}}</a>
                         </td>
