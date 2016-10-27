@@ -18,6 +18,30 @@ angular.module('app')
                     .otherwise('/app/dashboard');
                 $stateProvider
                     /*----Thu chi Routes ----*/
+                    .state('app.thuchi', {
+                        url: 'ThuChi/CapNhat',
+                        templateUrl: 'views/ThuChiViews/ThuChi.html',
+                        ncyBreadcrumb: {
+                            label: 'Cập nhật thu chi',
+                            description: 'Cập nhật thu chi'
+                        },
+                        resolve: {
+                            deps: [
+                                '$ocLazyLoad',
+                                function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        serie: true,
+                                        files: [
+                                            'app/controllers/thuchi/thuchiCtrl.js',
+                                            'app/services/thuchiService.js',
+                                            'app/services/nguoithuchi.js',
+                                            'app/services/lydoService.js',
+                                        ]
+                                    });
+                                }
+                            ]
+                        }
+                    })
                     .state('app.nguoithuchi', {
                         url: 'ThuChi/nguoithuchi',
                         templateUrl: 'views/ThuChiViews/NguoiThuChi.html',

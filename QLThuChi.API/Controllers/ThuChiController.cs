@@ -27,9 +27,9 @@ namespace QLThuChi.API.Controllers
 
         [Authorize]
         [Route("get/{thang}")]
-        public async Task<IEnumerable<Thuchi>> Get(string thang)
+        public IEnumerable<Thuchi> Get(string thang)
         {
-            return await db.Thuchis.Where(p => p.NgayThuchi.Value.ToString("yyyyMM") == thang).OrderByDescending(p => p.NgayThuchi).ToListAsync();
+            return db.Thuchis.ToList().Where(p => p.NgayThuchi.Value.ToString("yyyyMM") == thang).OrderByDescending(p => p.NgayThuchi);
         }
 
         [Authorize]
