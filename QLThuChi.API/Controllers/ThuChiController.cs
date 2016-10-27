@@ -26,10 +26,10 @@ namespace QLThuChi.API.Controllers
         }
 
         [Authorize]
-        [Route("{thang}")]
-        public IQueryable<Thuchi> Get(string thang)
+        [Route("get/{thang}")]
+        public async Task<IEnumerable<Thuchi>> Get(string thang)
         {
-            return db.Thuchis.Where(p => p.NgayThuchi.Value.ToString("yyyyMM") == thang).OrderByDescending(p => p.NgayThuchi);
+            return await db.Thuchis.Where(p => p.NgayThuchi.Value.ToString("yyyyMM") == thang).OrderByDescending(p => p.NgayThuchi).ToListAsync();
         }
 
         [Authorize]
