@@ -58,7 +58,7 @@ namespace QLThuChi.API.Controllers
             db.Thuchis.Add(new Thuchi()
             {
                 NguoiThuchiId = thuchi.NguoiThuchiId,
-                Tien = thuchi.Tien,
+                Tien = thuchi.KieuThu ? thuchi.Tien : -thuchi.Tien,
                 KieuThu = thuchi.KieuThu,
                 LydoId = thuchi.LydoId,
                 GhiChu = thuchi.GhiChu,
@@ -82,7 +82,7 @@ namespace QLThuChi.API.Controllers
 
             var tc = db.Thuchis.Where(p => p.LydoId == id).SingleOrDefault();
             tc.NguoiThuchiId = thuchi.NguoiThuchiId;
-            tc.Tien = thuchi.Tien;
+            tc.Tien = thuchi.KieuThu ? thuchi.Tien : -thuchi.Tien;
             tc.KieuThu = thuchi.KieuThu;
             tc.LydoId = thuchi.LydoId;
             tc.GhiChu = thuchi.GhiChu;
