@@ -50,3 +50,17 @@ function hasClass(elem, cls) {
     var testCls = " " + cls + " ";
     return (str.indexOf(testCls) != -1);
 }
+
+//Date extension
+Date.prototype.yyyymmdd = function () {
+    var mm = this.getMonth() + 1; // getMonth() is zero-based
+    var dd = this.getDate();
+
+    return [this.getFullYear(), !mm[1] && '0', mm, !dd[1] && '0', dd].join(''); // padding
+};
+
+Date.prototype.yyyymm = function () {
+    var mm = this.getMonth() + 1; // getMonth() is zero-based
+
+    return [this.getFullYear(), !mm[1] && '0', mm].join(''); // padding
+};

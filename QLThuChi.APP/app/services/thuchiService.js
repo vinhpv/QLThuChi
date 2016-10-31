@@ -15,6 +15,12 @@ app.factory('thuchiService', ['$http', '$q', '$localStorage', 'ngAuthSettings',
             });
         };
 
+        factory.GetListOfMonth = function (thang) {
+            return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/thuchi/get/' + thang).then(function (response) {
+                return response;
+            });
+        };
+
         factory.Insert = function (thuchiData) {
             var deferred = $q.defer();
             $http.post(ngAuthSettings.apiServiceBaseUri + 'api/thuchi', thuchiData)

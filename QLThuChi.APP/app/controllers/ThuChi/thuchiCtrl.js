@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-app.controller('thuchiCtrl', ['$scope', '$injector', function ($scope, $injector) {
+app.controller('thuchiCtrl', ['$scope', '$injector', function ($scope, $injector, $modalInstance) {
     var KhoiTao = function () {
         $scope.Thuchi = {};
         $scope.message = "";
@@ -11,6 +11,8 @@ app.controller('thuchiCtrl', ['$scope', '$injector', function ($scope, $injector
     var svNguoiThuChi = $injector.get('nguoithuchiService');
     var svlydo = $injector.get('lydoService');
     var focus = $injector.get('focus');
+    var svModal = $injector.get('modalService');
+    $scope.thang = new Date();
 
     $scope.LyDoes = function () {
         svlydo.GetAll().then(
@@ -35,10 +37,11 @@ app.controller('thuchiCtrl', ['$scope', '$injector', function ($scope, $injector
             )
     };
     $scope.getAll = function () {
-        sv.GetAll().then(
+        sv.GetListOfMonth($scope.thang.yyyymm()).then(
             function (data) {
                 $scope.Thuchis = data.data;
                 KhoiTao();
+               
             },
             function (err, stt) {
                 $scope.message = "Có lỗi xảy ra!";
@@ -47,6 +50,12 @@ app.controller('thuchiCtrl', ['$scope', '$injector', function ($scope, $injector
     };
     $scope.Insert = function () {
         KhoiTao();
+        svModal.open('CapNhatThuChi.html', 'thuchiCtrl', function () {
+            $scope.isInsert = true;
+            if ($scope.message != '')
+                $modalInstance.close(true);
+        }, 
+        function () { $modalInstance.dismiss('cancel'); });
         focus('txtTen');
     }
 
@@ -54,6 +63,7 @@ app.controller('thuchiCtrl', ['$scope', '$injector', function ($scope, $injector
         if ($scope.isInsert) {
             var data = {
                 "NguoiThuchiId": 0,
+                "NgayThuchi": $scope.Thuchi.NgayThuchi,
                 "KieuThu": $scope.Thuchi.KieuThu,
                 "LydoId": $scope.Thuchi.LydoId,
                 "Tien": $scope.Thuchi.Tien,
@@ -70,6 +80,7 @@ app.controller('thuchiCtrl', ['$scope', '$injector', function ($scope, $injector
         } else {
             var data = {
                 "NguoiThuchiId": $scope.Thuchi.NguoiThuchiId,
+                "NgayThuchi": $scope.Thuchi.NgayThuchi,
                 "KieuThu": $scope.Thuchi.KieuThu,
                 "LydoId": $scope.Thuchi.LydoId,
                 "Tien": $scope.Thuchi.Tien,

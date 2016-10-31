@@ -62,7 +62,7 @@ namespace QLThuChi.API.Controllers
                 KieuThu = thuchi.KieuThu,
                 LydoId = thuchi.LydoId,
                 GhiChu = thuchi.GhiChu,
-                NgayThuchi = DateTime.Now,
+                NgayThuchi = thuchi.NgayThuchi,
                 UserId = CurentUser.Id
             });
             await db.SaveChangesAsync();
@@ -86,7 +86,7 @@ namespace QLThuChi.API.Controllers
             tc.KieuThu = thuchi.KieuThu;
             tc.LydoId = thuchi.LydoId;
             tc.GhiChu = thuchi.GhiChu;
-            tc.NgayThuchi = DateTime.Now;
+            tc.NgayThuchi = thuchi.NgayThuchi;
             tc.UserId = CurentUser.Id;
             db.Entry(tc).State = EntityState.Modified;
 

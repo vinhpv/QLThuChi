@@ -34,3 +34,21 @@
 
     return service;
 })
+
+.service('modalService', function ($modal) {
+    var service = {};
+    service.open = function (_templateUrl,_controller, onOk, onClose) {
+        var modalInstance = $modal.open({
+            templateUrl: _templateUrl,
+            controller: _controller,
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            onOk();
+        }, function () {
+            onClose();
+        });
+    };
+
+    return service;
+})
