@@ -37,10 +37,15 @@
 
 .service('modalService', function ($modal) {
     var service = {};
-    service.open = function (_templateUrl,_controller, onOk, onClose) {
+    service.open = function (_data, _templateUrl,_controller, onOk, onClose) {
         var modalInstance = $modal.open({
             templateUrl: _templateUrl,
             controller: _controller,
+            resolve: {
+                data: function () {
+                    return _data
+                }
+            }
         });
 
         modalInstance.result.then(function (selectedItem) {

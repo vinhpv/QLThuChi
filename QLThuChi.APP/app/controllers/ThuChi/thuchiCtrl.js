@@ -123,3 +123,8 @@ app.controller('thuchiCtrl', ['$scope', '$injector', function ($scope, $injector
 
 
 }]);
+
+app.controller('thuchiEditCtrl', ['$scope', '$injector', function ($scope, $injector, $modalInstance) {
+    $scope.Thuchi = {};
+    var svModal = $injector.get('modalService');
+}]);
