@@ -146,7 +146,7 @@ app.controller('thuchiEditCtrl', ['$scope', '$injector', '$modalInstance', 'data
     $scope.ok = function () {
         if ($scope.isInsert) {
             var data = {
-                "NguoiThuchiId": 0,
+                "NguoiThuchiId": $scope.Thuchi.NguoiThuchiId,
                 "NgayThuchi": $scope.Thuchi.NgayThuchi,
                 "KieuThu": $scope.Thuchi.KieuThu,
                 "LydoId": $scope.Thuchi.LydoId,
@@ -166,6 +166,7 @@ app.controller('thuchiEditCtrl', ['$scope', '$injector', '$modalInstance', 'data
         else
         {
             var data = {
+                "ThuchiId": $scope.Thuchi.ThuchiId,
                 "NguoiThuchiId": $scope.Thuchi.NguoiThuchiId,
                 "NgayThuchi": $scope.Thuchi.NgayThuchi,
                 "KieuThu": $scope.Thuchi.KieuThu,

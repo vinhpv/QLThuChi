@@ -63,7 +63,7 @@ namespace QLThuChi.API.Controllers
                 LydoId = thuchi.LydoId,
                 GhiChu = thuchi.GhiChu,
                 NgayThuchi = thuchi.NgayThuchi,
-                UserId = CurentUser.Id
+                UserId = CurentUser == null ? "8b20e9c1-604f-4e18-9ca2-06f2904eab2c" : CurentUser.Id
             });
             await db.SaveChangesAsync();
 
