@@ -1,6 +1,5 @@
 ﻿<div ng-controller="thuchiCtrl">
     <script type="text/ng-template" id="CapNhatThuChi.html">
-        <div class="row">
             <div class="widget">
                 <div class="widget-header bordered-bottom bordered-blue">
                     <span class="widget-caption">Thông tin</span>
@@ -17,7 +16,7 @@
                             <div class="form-group">
                                 <label for="cboLyDo">Lý do</label>
                                 <select class="form-control" id="cboLyDo" placeholder="Lựa chọn lý do" ng-model="Thuchi.LydoId">
-                                    <option ng-repeat="item in Lydoes" value="{{item.LydoId}}">{{item.TenLyDo}}</option>
+                                    <option ng-repeat="item in LyDoes" value="{{item.LydoId}}">{{item.TenLydo}}</option>
                                 </select>
                             </div>
 
@@ -29,7 +28,8 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="checkbox" class="colored-blue" ng-model="Thuchi.KieuThu" />
+                                <label for="dtpNgayThu">Ngày Thu</label>
+                                <input type="date" class="form-control" id="dtpNgayThu" placeholder="Ghi chú" ng-model="Thuchi.NgayThuchi">
                             </div>
 
                             <div class="form-group">
@@ -37,22 +37,30 @@
                                 <input type="text" class="form-control" id="txtGhiChu" placeholder="Ghi chú" ng-model="Thuchi.GhiChu">
                             </div>
 
-                            <div class="buttons-preview">
-                                <a class="btn btn-success" href="javascript:void(0);" ng-click="Commit()" confirm='Bạn chắc chắn muốn cập nhật?'>Cập nhật <i class="fa fa-check right"></i></a>
-
-                                <a class="btn btn-warning" href="javascript:void(0);" ng-click="Close()"><i class="fa fa-times"></i> Delete</a>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" class="colored-danger" id="chkKieuThu" ng-checked="Thuchi.KieuThu" ng-model="Thuchi.KieuThu">
+                                    <span class="text">Kiểu thu</span>
+                                </label>
                             </div>
+
+                            <alert type="danger" class="radius-bordered alert-shadowed" ng-show="{{message != ''}}">
+                                <i class="fa-fw fa fa-times"></i>
+                                <strong>{{message}}</strong>
+                            </alert>
+
+                            <div class="buttons-preview">
+                                <a class="btn btn-success" href="javascript:void(0);" ng-click="ok()" confirm='Bạn chắc chắn muốn cập nhật?'>Cập nhật <i class="fa fa-check right"></i></a>
+
+                                <a class="btn btn-warning" href="javascript:void(0);" ng-click="cancel()"><i class="fa fa-times"></i> Hủy</a>
+                            </div>
+
+
+                            
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <alert type="danger" class="radius-bordered alert-shadowed" ng-show="{{message != ''}}">
-                <i class="fa-fw fa fa-times"></i>
-                <strong>{{message}}</strong>
-            </alert>
-        </div>
     </script>
     <div class="row">
         <div class="center-block" data-loading>

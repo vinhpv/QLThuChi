@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-app.controller('thuchiCtrl', ['$scope', '$injector', function ($scope, $injector, $modalInstance) {
+app.controller('thuchiCtrl', ['$scope', '$injector', '$modal', function ($scope, $injector, $modal) {
     var KhoiTao = function () {
         $scope.Thuchi = {};
         $scope.message = "";
@@ -14,34 +14,13 @@ app.controller('thuchiCtrl', ['$scope', '$injector', function ($scope, $injector
     var svModal = $injector.get('modalService');
     $scope.thang = new Date();
 
-    $scope.LyDoes = function () {
-        svlydo.GetAll().then(
-            function (data) {
-                return data.data;
-            },
-            function (err, stt) {
-                $scope.message = "Có lỗi xảy ra!";
-                return {};
-            }
-            )
-    };
-    $scope.NguoiThuChis = function () {
-        svNguoiThuChi.GetAll().then(
-            function (data) {
-                return data.data;
-            },
-            function (err, stt) {
-                $scope.message = "Có lỗi xảy ra!";
-                return {};
-            }
-            )
-    };
+
     $scope.getAll = function () {
         sv.GetListOfMonth($scope.thang.yyyymm()).then(
             function (data) {
                 $scope.Thuchis = data.data;
                 KhoiTao();
-               
+
             },
             function (err, stt) {
                 $scope.message = "Có lỗi xảy ra!";
@@ -50,12 +29,22 @@ app.controller('thuchiCtrl', ['$scope', '$injector', function ($scope, $injector
     };
     $scope.Insert = function () {
         KhoiTao();
-        svModal.open('CapNhatThuChi.html', 'thuchiCtrl', function () {
-            $scope.isInsert = true;
-            if ($scope.message != '')
-                $modalInstance.close(true);
-        }, 
-        function () { $modalInstance.dismiss('cancel'); });
+
+        var modalInstance = $modal.open({
+            templateUrl: 'CapNhatThuChi.html',
+            controller: 'thuchiEditCtrl',
+            size: 'lg',
+            resolve: {
+                data: function () {
+                    return $scope.Thuchi;
+
+                },
+                isInsert: function () {
+                    return $scope.isInsert;
+                }
+            }
+        });
+
         focus('txtTen');
     }
 
@@ -124,7 +113,82 @@ app.controller('thuchiCtrl', ['$scope', '$injector', function ($scope, $injector
 
 }]);
 
-app.controller('thuchiEditCtrl', ['$scope', '$injector', function ($scope, $injector, $modalInstance) {
-    $scope.Thuchi = {};
-    var svModal = $injector.get('modalService');
+app.controller('thuchiEditCtrl', ['$scope', '$injector', '$modalInstance', 'data', 'isInsert',
+    function ($scope, $injector, $modalInstance, data, isInsert) {
+    $scope.Thuchi = data;
+    $scope.isInsert = isInsert;
+    var sv = $injector.get('thuchiService');
+    var svNguoiThuChi = $injector.get('nguoithuchiService');
+    var svlydo = $injector.get('lydoService');
+    $scope.message = '';
+
+    function khoiTaoDuLieu() {
+        svlydo.GetAll().then(
+            function (data) {
+                $scope.LyDoes = data.data;
+            },
+            function (err, stt) {
+                $scope.message = "Có lỗi xảy ra!";
+                $scope.LyDoes = [];
+            }
+            );
+        svNguoiThuChi.GetAll().then(
+            function (data) {
+                $scope.NguoiThuChis = data.data;
+            },
+            function (err, stt) {
+                $scope.message = "Có lỗi xảy ra!";
+                $scope.NguoiThuChis = [];
+            }
+            );
+    }
+
+    $scope.ok = function () {
+        if ($scope.isInsert) {
+            var data = {
+                "NguoiThuchiId": 0,
+                "NgayThuchi": $scope.Thuchi.NgayThuchi,
+                "KieuThu": $scope.Thuchi.KieuThu,
+                "LydoId": $scope.Thuchi.LydoId,
+                "Tien": $scope.Thuchi.Tien,
+                "GhiChu": $scope.Thuchi.GhiChu
+            };
+            sv.Insert(data).then(
+                    function (response) {
+                        //$scope.getAll();
+                        $modalInstance.close($scope.Thuchi);
+                    },
+                    function (err) {
+                        $scope.message = "Có lỗi xảy ra trong quá trình thực hiện! ";
+                    }
+                );
+        }
+        else
+        {
+            var data = {
+                "NguoiThuchiId": $scope.Thuchi.NguoiThuchiId,
+                "NgayThuchi": $scope.Thuchi.NgayThuchi,
+                "KieuThu": $scope.Thuchi.KieuThu,
+                "LydoId": $scope.Thuchi.LydoId,
+                "Tien": $scope.Thuchi.Tien,
+                "GhiChu": $scope.Thuchi.GhiChu
+            };
+            sv.Update($scope.Thuchi.ThuchiId, data).then(
+                    function (response) {
+                        $modalInstance.close($scope.Thuchi);
+                    },
+                    function (err) {
+                        $scope.message = "Có lỗi xảy ra trong quá trình thực hiện! ";
+                    }
+                );
+        }
+
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
+    khoiTaoDuLieu();
+
 }]);
