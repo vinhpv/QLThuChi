@@ -52,15 +52,16 @@ function hasClass(elem, cls) {
 }
 
 //Date extension
+//Date extension
 Date.prototype.yyyymmdd = function () {
     var mm = this.getMonth() + 1; // getMonth() is zero-based
     var dd = this.getDate();
 
-    return [this.getFullYear(), !mm[1] && '0', mm, !dd[1] && '0', dd].join(''); // padding
+    return [this.getFullYear(), (mm[1] == undefined) ? '' : '0', mm, (dd[1] == undefined) ? '' : '0', dd].join(''); // padding
 };
 
 Date.prototype.yyyymm = function () {
     var mm = this.getMonth() + 1; // getMonth() is zero-based
 
-    return [this.getFullYear(), !mm[1] && '0', mm].join(''); // padding
+    return [this.getFullYear(), (mm[1] == undefined) ? '' : '0', mm].join(''); // padding
 };
