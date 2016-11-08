@@ -19,14 +19,18 @@ namespace QLThuChi.API.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Lydoes
+#if !DEBUG
         [Authorize]
+#endif
         public IQueryable<Lydo> GetLydoes()
         {
             return db.Lydoes;
         }
 
         // GET: api/Lydoes/5
+#if !DEBUG
         [Authorize]
+#endif
         [ResponseType(typeof(Lydo))]
         public async Task<IHttpActionResult> GetLydo(int id)
         {
@@ -39,7 +43,9 @@ namespace QLThuChi.API.Controllers
             return Ok(lydo);
         }
 
+#if !DEBUG
         [Authorize(Roles ="Admin")]
+#endif
         // PUT: api/Lydoes/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutLydo(int id, Lydo lydo)
@@ -75,7 +81,9 @@ namespace QLThuChi.API.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [Authorize(Roles = "Admin")]
+#if !DEBUG
+        [Authorize(Roles ="Admin")]
+#endif
         // POST: api/Lydoes
         [ResponseType(typeof(Lydo))]
         public async Task<IHttpActionResult> PostLydo(Lydo lydo)
@@ -91,7 +99,9 @@ namespace QLThuChi.API.Controllers
             return CreatedAtRoute("DefaultApi", new { id = lydo.LydoId }, lydo);
         }
 
-        [Authorize(Roles = "Admin")]
+#if !DEBUG
+        [Authorize(Roles ="Admin")]
+#endif
         // DELETE: api/Lydoes/5
         [ResponseType(typeof(Lydo))]
         public async Task<IHttpActionResult> DeleteLydo(int id)

@@ -24,12 +24,24 @@ namespace QLThuChi.API.Controllers
         {
             return db.Thuchis.Where(p => p.User == CurentUser);
         }
-
+#if !DEBUG
         [Authorize]
+#endif 
         [Route("get/{thang}")]
         public IEnumerable<Thuchi> Get(string thang)
         {
             return db.Thuchis.ToList().Where(p => p.NgayThuchi.Value.ToString("yyyyMM") == thang).OrderByDescending(p => p.NgayThuchi);
+        }
+
+#if !DEBUG
+        [Authorize]
+#endif
+        [Route("Thang/{thang}")]
+        public async Task<IHttpActionResult> GetThang(string thang)
+        {
+            int _nam = int.Parse(thang.Substring(0, 4));
+            int _thang = int.Parse(thang.Substring(4, 2));
+            return Ok(await db.Thuchis.Where(p => p.NgayThuchi.Value.Year == _nam && p.NgayThuchi.Value.Month == _thang).OrderByDescending(p => p.NgayThuchi).ToListAsync());
         }
 
         [Authorize]
@@ -45,7 +57,9 @@ namespace QLThuChi.API.Controllers
             return Ok(Thuchi);
         }
 
+#if !DEBUG
         [Authorize]
+#endif
         [Route("")]
         [HttpPost]
         public async Task<IHttpActionResult> Insert(ThuChiViewModel thuchi)
@@ -57,10 +71,10 @@ namespace QLThuChi.API.Controllers
 
             db.Thuchis.Add(new Thuchi()
             {
-                NguoiThuchiId = thuchi.NguoiThuchiId,
+                NguoiThuchi  = db.Nguoithuchis.Find(thuchi.NguoiThuchiId),
                 Tien = thuchi.KieuThu ? thuchi.Tien : -thuchi.Tien,
                 KieuThu = thuchi.KieuThu,
-                LydoId = thuchi.LydoId,
+                Lydo = db.Lydoes.Find(thuchi.LydoId),
                 GhiChu = thuchi.GhiChu,
                 NgayThuchi = thuchi.NgayThuchi,
                 UserId = CurentUser.Id
@@ -70,7 +84,9 @@ namespace QLThuChi.API.Controllers
             return Ok();
         }
 
+#if !DEBUG
         [Authorize]
+#endif
         [Route("{id}")]
         [HttpPut]
         public async Task<IHttpActionResult> Update(int id, ThuChiViewModel thuchi)
@@ -80,11 +96,11 @@ namespace QLThuChi.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var tc = db.Thuchis.Where(p => p.LydoId == id).SingleOrDefault();
-            tc.NguoiThuchiId = thuchi.NguoiThuchiId;
+            var tc = db.Thuchis.Where(p => p.ThuchiId == id).SingleOrDefault();
+            tc.NguoiThuchi = db.Nguoithuchis.Find(thuchi.NguoiThuchiId);
             tc.Tien = thuchi.KieuThu ? thuchi.Tien : -thuchi.Tien;
             tc.KieuThu = thuchi.KieuThu;
-            tc.LydoId = thuchi.LydoId;
+            tc.Lydo = db.Lydoes.Find(thuchi.LydoId);
             tc.GhiChu = thuchi.GhiChu;
             tc.NgayThuchi = thuchi.NgayThuchi;
             tc.UserId = CurentUser.Id;
@@ -109,7 +125,9 @@ namespace QLThuChi.API.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+#if !DEBUG
         [Authorize]
+#endif
         [Route("{id}")]
         [HttpDelete]
         public async Task<IHttpActionResult> Delete(int id)

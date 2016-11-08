@@ -33,9 +33,9 @@ namespace QLThuChi.API.Entities
         [Required]
         public DateTime JoinDate { get; set; }
 
-        public virtual IEnumerable<TodoItem> TodoItems { get; set; }
+        public virtual ICollection<TodoItem> TodoItems { get; set; }
 
-        public virtual IEnumerable<Thuchi> Thuchis { get; set; }
+        public virtual ICollection<Thuchi> Thuchis { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {

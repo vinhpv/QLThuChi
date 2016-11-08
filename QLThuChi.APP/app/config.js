@@ -26,5 +26,6 @@ app.config(function ($httpProvider) {
 });
 
 app.constant('ngAuthSettings', {
-    apiServiceBaseUri: 'https://thuchiapi.vinhpv.us/' //'http://localhost:64990/'
+    //apiServiceBaseUri: 'https://thuchiapi.vinhpv.us/' //'http://localhost:64990/'
+    apiServiceBaseUri: 'http://localhost:64990/'
 });

@@ -20,13 +20,18 @@ namespace QLThuChi.API.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Nguoithuchis
+#if !DEBUG
         [Authorize]
+#endif
         [Route("")]
         public IQueryable<Nguoithuchi> GetNguoithuchis()
         {
             return db.Nguoithuchis;
         }
+
+#if !DEBUG
         [Authorize]
+#endif
         [Route("{id}")]
         [HttpGet]
         // GET: api/Nguoithuchis/5
@@ -42,7 +47,9 @@ namespace QLThuChi.API.Controllers
             return Ok(nguoithuchi);
         }
 
-        [Authorize(Roles = "Admin")]
+#if !DEBUG
+        [Authorize(Roles ="Admin")]
+#endif
         [Route("{id}")]
         [HttpPut]
         // PUT: api/Nguoithuchis/5
@@ -82,7 +89,9 @@ namespace QLThuChi.API.Controllers
         }
 
         // POST: api/Nguoithuchis
-        [Authorize(Roles = "Admin")]
+#if !DEBUG
+        [Authorize(Roles ="Admin")]
+#endif
         [Route("")]
         [HttpPost]
         [ResponseType(typeof(Nguoithuchi))]
@@ -100,7 +109,9 @@ namespace QLThuChi.API.Controllers
         }
 
         // DELETE: api/Nguoithuchis/5
-        [Authorize(Roles = "Admin")]
+#if !DEBUG
+        [Authorize(Roles ="Admin")]
+#endif
         [Route("{id}")]
         [HttpDelete]
         [ResponseType(typeof(Nguoithuchi))]

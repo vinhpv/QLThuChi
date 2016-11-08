@@ -18,7 +18,9 @@ namespace QLThuChi.API.Models
     : base("DefaultConnection", throwIfV1Schema: false)
         {
             Configuration.ProxyCreationEnabled = false;
-            Configuration.LazyLoadingEnabled = false;
+            Configuration.LazyLoadingEnabled = true;
+            Database.SetInitializer(new
+            DropCreateDatabaseIfModelChanges<ApplicationDbContext>());
         }
 
         public DbSet<TodoItem> todos { get; set; }
@@ -38,6 +40,19 @@ namespace QLThuChi.API.Models
             modelBuilder.Entity<IdentityUserRole>().ToTable("UserRoles");
             modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogins");
             modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");
+
+            modelBuilder.Entity<Thuchi>()
+                    .HasRequired(s => s.NguoiThuchi)
+                    .WithMany(s => s.Thuchis);
+
+            modelBuilder.Entity<Thuchi>()
+                   .HasRequired(s => s.Lydo)
+                   .WithMany(s => s.Thuchis);
+
+            modelBuilder.Entity<Thuchi>()
+                  .HasRequired<ApplicationUser>(s => s.User)
+                  .WithMany(s => s.Thuchis);
+
         }
     }
 }

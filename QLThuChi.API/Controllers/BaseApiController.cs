@@ -23,7 +23,11 @@ namespace QLThuChi.API.Controllers
         {
             get
             {
+#if !DEBUG
                 return _CurentUser ?? AppUserManager.FindById(RequestContext.Principal.Identity.GetUserId());
+#else
+                return _CurentUser ?? AppUserManager.FindByName("sysadmin");
+#endif
             }
         }
 
