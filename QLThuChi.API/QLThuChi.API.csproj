@@ -255,6 +255,22 @@
     <Compile Include="Migrations\201611090825467_InitialCreate1.Designer.cs">
       <DependentUpon>201611090825467_InitialCreate1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611091600146_InitialCreate2.cs" />
+    <Compile Include="Migrations\201611091600146_InitialCreate2.Designer.cs">
+      <DependentUpon>201611091600146_InitialCreate2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611091655496_ChangeOne.cs" />
+    <Compile Include="Migrations\201611091655496_ChangeOne.Designer.cs">
+      <DependentUpon>201611091655496_ChangeOne.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611091710272_ChangeOne1.cs" />
+    <Compile Include="Migrations\201611091710272_ChangeOne1.Designer.cs">
+      <DependentUpon>201611091710272_ChangeOne1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611091736256_ChangeSecond.cs" />
+    <Compile Include="Migrations\201611091736256_ChangeSecond.Designer.cs">
+      <DependentUpon>201611091736256_ChangeSecond.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -341,6 +357,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611090825467_InitialCreate1.resx">
       <DependentUpon>201611090825467_InitialCreate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611091600146_InitialCreate2.resx">
+      <DependentUpon>201611091600146_InitialCreate2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611091655496_ChangeOne.resx">
+      <DependentUpon>201611091655496_ChangeOne.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611091710272_ChangeOne1.resx">
+      <DependentUpon>201611091710272_ChangeOne1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611091736256_ChangeSecond.resx">
+      <DependentUpon>201611091736256_ChangeSecond.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

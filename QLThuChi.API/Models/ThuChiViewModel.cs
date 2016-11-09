@@ -15,9 +15,6 @@ namespace QLThuChi.API.Models
         public DateTime NgayThuchi { get; set; }
 
         [Required]
-        public bool KieuThu { get; set; }
-
-        [Required]
         public int? LydoId { get; set; }
 
         [Required]

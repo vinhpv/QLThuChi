@@ -17,10 +17,8 @@ namespace QLThuChi.API.Models
         public ApplicationDbContext()
     : base("DefaultConnection", throwIfV1Schema: false)
         {
-            Configuration.ProxyCreationEnabled = false;
+            Configuration.ProxyCreationEnabled = true;
             Configuration.LazyLoadingEnabled = true;
-            Database.SetInitializer(new
-            DropCreateDatabaseIfModelChanges<ApplicationDbContext>());
         }
 
         public DbSet<TodoItem> todos { get; set; }
@@ -41,17 +39,17 @@ namespace QLThuChi.API.Models
             modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogins");
             modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");
 
-            modelBuilder.Entity<Thuchi>()
-                    .HasRequired(s => s.NguoiThuchi)
-                    .WithMany(s => s.Thuchis);
+            //modelBuilder.Entity<Thuchi>()
+            //        .HasRequired(s => s.NguoiThuchi)
+            //        .WithMany(s => s.Thuchis);
 
-            modelBuilder.Entity<Thuchi>()
-                   .HasRequired(s => s.Lydo)
-                   .WithMany(s => s.Thuchis);
+            //modelBuilder.Entity<Thuchi>()
+            //       .HasRequired(s => s.Lydo)
+            //       .WithMany(s => s.Thuchis);
 
-            modelBuilder.Entity<Thuchi>()
-                  .HasRequired<ApplicationUser>(s => s.User)
-                  .WithMany(s => s.Thuchis);
+            //modelBuilder.Entity<Thuchi>()
+            //    .HasOptional(s => s.User)
+            //      .WithMany(s => s.Thuchis);
 
         }
     }

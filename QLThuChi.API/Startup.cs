@@ -35,6 +35,10 @@ namespace QLThuChi.API
             // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)
 
             app.UseWebApi(httpConfig);
+
+            httpConfig.Formatters.JsonFormatter
+            .SerializerSettings
+            .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         }
 
         private void ConfigureOAuthTokenGeneration(IAppBuilder app)

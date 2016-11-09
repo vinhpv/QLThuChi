@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -41,7 +43,13 @@ namespace QLThuChi.API.Controllers
         {
             int _nam = int.Parse(thang.Substring(0, 4));
             int _thang = int.Parse(thang.Substring(4, 2));
-            var a = await db.Thuchis.Where(p => p.NgayThuchi.Value.Year == _nam && p.NgayThuchi.Value.Month == _thang).OrderByDescending(p => p.NgayThuchi).ToListAsync();
+            var a = await db.Thuchis.Where(p => p.NgayThuchi.Value.Year == _nam && p.NgayThuchi.Value.Month == _thang).OrderByDescending(p => p.NgayThuchi)
+                .Select(p => new
+                {
+                    p.ThuchiId,p.Tien,p.LydoId,p.NguoithuchiId,p.NgayThuchi, p.GhiChu,
+                    p.Lydo.TenLydo, p.Lydo.KieuThu, p.NguoiThuchi.HoTen, p.UserId, p.User.UserName
+                })
+                .ToListAsync();
             return Ok(a);
         }
 
@@ -72,26 +80,45 @@ namespace QLThuChi.API.Controllers
             try
             {
                 var db2 = new ApplicationDbContext();
-                var tc = new Thuchi() {
-                    NguoiThuchi = db2.Nguoithuchis.Find(thuchi.NguoiThuchiId),
-                    Tien = thuchi.KieuThu ? thuchi.Tien : -thuchi.Tien,
-                    KieuThu = thuchi.KieuThu,
-                    Lydo = db2.Lydoes.Find(thuchi.LydoId),
+                var lydo = db2.Lydoes.Find(thuchi.LydoId);
+                var tc = new Thuchi()
+                {
+                    NguoithuchiId = thuchi.NguoiThuchiId,
+                    Tien = lydo.KieuThu == Kieuthu.Thu ? Math.Abs(thuchi.Tien.Value) : -Math.Abs(thuchi.Tien.Value),
+                    LydoId = thuchi.LydoId.Value,
                     GhiChu = thuchi.GhiChu,
                     NgayThuchi = thuchi.NgayThuchi,
-                    User = CurentUser
+                    UserId = CurentUser.Id
                 };
-                
                 db.Thuchis.Add(tc);
                 await db.SaveChangesAsync();
 
                 return Ok();
             }
+            catch (DbEntityValidationException ex)
+            {
+                //return BadRequest();
+
+                StringBuilder sb = new StringBuilder();
+
+                foreach (var failure in ex.EntityValidationErrors)
+                {
+                    sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+                    foreach (var error in failure.ValidationErrors)
+                    {
+                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                }
+                return BadRequest(sb.ToString());
+
+            }
             catch (Exception ex)
             {
+
                 return BadRequest(ex.Message);
             }
-           
+
         }
 
 #if !DEBUG
@@ -105,15 +132,16 @@ namespace QLThuChi.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            var db2 = new ApplicationDbContext();
+            var lydo = db2.Lydoes.Find(thuchi.LydoId);
 
             var tc = db.Thuchis.Where(p => p.ThuchiId == id).SingleOrDefault();
-            tc.NguoiThuchi = db.Nguoithuchis.Find(thuchi.NguoiThuchiId);
-            tc.Tien = thuchi.KieuThu ? thuchi.Tien : -thuchi.Tien;
-            tc.KieuThu = thuchi.KieuThu;
-            tc.Lydo = db.Lydoes.Find(thuchi.LydoId);
+            tc.NguoithuchiId = thuchi.NguoiThuchiId;
+            tc.Tien = lydo.KieuThu == Kieuthu.Thu ? Math.Abs(thuchi.Tien.Value) : -Math.Abs(thuchi.Tien.Value);
+            tc.LydoId = thuchi.LydoId.Value;
             tc.GhiChu = thuchi.GhiChu;
             tc.NgayThuchi = thuchi.NgayThuchi;
-            tc.User = CurentUser ?? (new ApplicationDbContext()).Users.Find("8b20e9c1-604f-4e18-9ca2-06f2904eab2c");
+            tc.UserId = CurentUser.Id;
             db.Entry(tc).State = EntityState.Modified;
 
             try
