@@ -49,9 +49,6 @@ namespace QLThuChi.API.Entities
         //[ForeignKey("LydoId")]
         public virtual Lydo Lydo { get; set; }
         public string GhiChu { get; set; }
-
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
     }
 

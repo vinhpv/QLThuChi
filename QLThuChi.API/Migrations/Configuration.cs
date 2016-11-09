@@ -9,7 +9,7 @@ namespace QLThuChi.API.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(QLThuChi.API.Models.ApplicationDbContext context)

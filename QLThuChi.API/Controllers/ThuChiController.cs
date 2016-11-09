@@ -41,7 +41,8 @@ namespace QLThuChi.API.Controllers
         {
             int _nam = int.Parse(thang.Substring(0, 4));
             int _thang = int.Parse(thang.Substring(4, 2));
-            return Ok(await db.Thuchis.Where(p => p.NgayThuchi.Value.Year == _nam && p.NgayThuchi.Value.Month == _thang).OrderByDescending(p => p.NgayThuchi).ToListAsync());
+            var a = await db.Thuchis.Where(p => p.NgayThuchi.Value.Year == _nam && p.NgayThuchi.Value.Month == _thang).OrderByDescending(p => p.NgayThuchi).ToListAsync();
+            return Ok(a);
         }
 
         [Authorize]
@@ -68,20 +69,29 @@ namespace QLThuChi.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            db.Thuchis.Add(new Thuchi()
+            try
             {
-                NguoiThuchi  = db.Nguoithuchis.Find(thuchi.NguoiThuchiId),
-                Tien = thuchi.KieuThu ? thuchi.Tien : -thuchi.Tien,
-                KieuThu = thuchi.KieuThu,
-                Lydo = db.Lydoes.Find(thuchi.LydoId),
-                GhiChu = thuchi.GhiChu,
-                NgayThuchi = thuchi.NgayThuchi,
-                UserId = CurentUser == null ? "8b20e9c1-604f-4e18-9ca2-06f2904eab2c" : CurentUser.Id
-            });
-            await db.SaveChangesAsync();
+                var db2 = new ApplicationDbContext();
+                var tc = new Thuchi() {
+                    NguoiThuchi = db2.Nguoithuchis.Find(thuchi.NguoiThuchiId),
+                    Tien = thuchi.KieuThu ? thuchi.Tien : -thuchi.Tien,
+                    KieuThu = thuchi.KieuThu,
+                    Lydo = db2.Lydoes.Find(thuchi.LydoId),
+                    GhiChu = thuchi.GhiChu,
+                    NgayThuchi = thuchi.NgayThuchi,
+                    User = CurentUser
+                };
+                
+                db.Thuchis.Add(tc);
+                await db.SaveChangesAsync();
 
-            return Ok();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
         }
 
 #if !DEBUG
@@ -103,7 +113,7 @@ namespace QLThuChi.API.Controllers
             tc.Lydo = db.Lydoes.Find(thuchi.LydoId);
             tc.GhiChu = thuchi.GhiChu;
             tc.NgayThuchi = thuchi.NgayThuchi;
-            tc.UserId = CurentUser.Id;
+            tc.User = CurentUser ?? (new ApplicationDbContext()).Users.Find("8b20e9c1-604f-4e18-9ca2-06f2904eab2c");
             db.Entry(tc).State = EntityState.Modified;
 
             try

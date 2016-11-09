@@ -26,7 +26,7 @@ namespace QLThuChi.API.Controllers
 #if !DEBUG
                 return _CurentUser ?? AppUserManager.FindById(RequestContext.Principal.Identity.GetUserId());
 #else
-                return _CurentUser ?? AppUserManager.FindByName("sysadmin");
+                return _CurentUser ?? new ApplicationDbContext().Users.FirstOrDefault(p=>p.UserName=="sysadmin"); //AppUserManager.FindByName("sysadmin");
 #endif
             }
         }
