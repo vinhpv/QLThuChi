@@ -39,7 +39,10 @@ namespace QLThuChi.API.Entities
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {
-            var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
+            //var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
+            var userIdentity = new ClaimsIdentity(authenticationType);
+            Claim claim = new Claim("Roles", "Admin");
+            userIdentity.AddClaim(claim);
             // Add custom user claims here
             return userIdentity;
         }
